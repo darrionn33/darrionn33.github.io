@@ -10,13 +10,13 @@ html {
 
 img {
   height: 230px;
-  max-width: 90vw;
 }
 img,
 h1,
 p {
   display: block;
   width: 500px;
+  max-width: 90vw;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
