@@ -1,9 +1,59 @@
-*,
-*::before,
-*::after {
+* {
   margin: 0;
   padding: 0;
-  border: 0;
-  box-sizing: border-box;
+  bottom: 0;
   font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  user-select: none;
+  display: grid;
+  place-items: center;
+  height: 100dvh;
+  /* background: rgb(6, 9, 15); */
+  color: white;
+}
+div {
+  border: 1px solid;
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  color: black;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition:
+    box-shadow 0.5s,
+    transform 0.5s;
+}
+div:active {
+  transform: translate(10px, 10px);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+span {
+  padding: 5px 15px;
+}
+span:nth-child(2) {
+  color: green;
+  border-left: 1px solid rgb(6, 9, 15);
+  position: relative;
+}
+span:nth-child(2)::after {
+  content: "•";
+  font-size: x-large;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  animation: xxx 2s ease-in-out infinite;
+}
+
+@keyframes xxx {
+  from,
+  to {
+    transform: translate(-50%, -50%) scale(200%);
+    /* filter: blur(0.5px); */
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(150%);
+    /* filter: blur(0px); */
+  }
 }
