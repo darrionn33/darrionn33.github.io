@@ -3,9 +3,143 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Groceries</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        bottom: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      body {
+        padding: 10px;
+        background: rebeccapurple;
+        user-select: none;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+      }
+      .container > span {
+        font-size: small;
+        border-radius: 5px;
+        background: rgb(255, 255, 255);
+        height: 50px;
+        display: grid;
+        place-items: center;
+        text-wrap-mode: wrap;
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    grocery-tracker
+    <div class="container"></div>
+    <script>
+      const reset = () => {
+        document.querySelectorAll("span").forEach((span) => {
+          span.style.background = "white";
+          span.setAttribute("selected", "false");
+        });
+        return "Resetted.";
+      };
+
+      const getSelected = () => {
+        const selectedArray = [];
+        document.querySelectorAll("span").forEach((span) => {
+          if (span.getAttribute("selected") == "true") {
+            selectedArray.push({ name: span.innerText, qty: 1 });
+          }
+        });
+
+        return selectedArray;
+      };
+
+      const results = () => {
+        let generatedText = "LIST\n";
+        getSelected().forEach((item) => {
+          generatedText = generatedText + "\n" + item.name + " - " + item.qty;
+        });
+        navigator.clipboard.writeText(generatedText);
+      };
+      const defaultItems = [
+        { name: "Battery\n(Thicc AA)", unit: "nos.", price: 22 },
+        { name: "Battery \n(Thin AAA)", unit: "nos.", price: 22 },
+        { name: "Biscuit", unit: "pack", price: 30 },
+        { name: "Bread", unit: "loaf", price: 35 },
+        { name: "Butter", unit: "pack of 100g", price: 47 },
+        { name: "Coffee", unit: "pack", price: 10 },
+        { name: "Cross", unit: "bottle of 500ml", price: 65 },
+        { name: "Dal", unit: "bag of 1 kg / 500g", price: 100 },
+        { name: "Deodarant", unit: "pack of 125ml", price: 125 },
+        { name: "Eggs", unit: "tray of 15 nos. / 30 nos.", price: 8 },
+        { name: "Face Wash", unit: "pack", price: 20 },
+        { name: "Ginger Bah", unit: "bag of 100 gm / 250g / 500g", price: 0 },
+        {
+          name: "Ginger Makhir",
+          unit: "bag of 100 gm / 250g / 500g",
+          price: 0,
+        },
+        { name: "Kwai", unit: "pack", price: 10 },
+        { name: "Raja", unit: "pack", price: 15 },
+        { name: "Milk", unit: "pack of 500 ml / 1 L", price: "39 / 75" },
+        {
+          name: "Moisturizer",
+          unit: "pack of 100ml / 200 ml",
+          price: "0 / 245",
+        },
+        { name: "Oats", unit: "pack of 400g", price: 100 },
+        {
+          name: "Oil",
+          unit: "bottle / bottle / tin of 500 ml / 1 L / 15L",
+          price: "0 / 0 / 1000",
+        },
+        { name: "Onion", unit: "bag of 500g / 1 kg", price: 0 },
+        { name: "Potato", unit: "bag of 500g / 1 kg", price: 20 },
+        { name: "Rice", unit: "bag / sack of 1 kg / 30 kg", price: 1280 },
+        { name: "Salt", unit: "pack", price: 30 },
+        { name: "Shampoo", unit: "pack", price: 185 },
+        { name: "Slasha", unit: "pack of 250g", price: 105 },
+        { name: "Soap (HD)", unit: "pack of 4 nos.", price: 110 },
+        { name: "Soap (Pears)", unit: "pack", price: 57 },
+        { name: "Steelwool", unit: "pack", price: 30 },
+        { name: "Sugar", unit: "bag of 1 kg", price: 55 },
+        { name: "Surf Excel", unit: "pack of 1 kg", price: 140 },
+        { name: "Toilet Paper", unit: "pack of 6 nos. / 10 nos.", price: 100 },
+        { name: "Toothpaste", unit: "pack", price: 100 },
+        { name: "Turmeric", unit: "pack of 50g", price: 50 },
+      ];
+
+      let lastTap = 0;
+      let lastItem = null;
+
+      const container = document.querySelector(".container");
+
+      defaultItems.forEach((item, i) => {
+        container.appendChild(document.createElement("span"));
+        const span = container.children[i];
+        span.innerText = item.name;
+        span.setAttribute("selected", "false");
+        span.onclick = (e) => {
+          const now = Date.now();
+
+          if (span === lastItem && now - lastTap < 300) {
+            alert("how many?");
+          } else {
+            if (span.getAttribute("selected") == "false") {
+              span.setAttribute("selected", "true");
+              span.style.background = "orange";
+            } else {
+              span.setAttribute("selected", "false");
+              span.style.background = "white";
+            }
+          }
+
+          lastTap = now;
+          lastItem = span;
+        };
+      });
+    </script>
   </body>
 </html>
